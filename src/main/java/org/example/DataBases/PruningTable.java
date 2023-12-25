@@ -4,10 +4,6 @@ import static org.example.DataBases.MoveTable.*;
 
 public class PruningTable {
 
-//    public static final short UDSLICE_COMBINATION_NUMBER = 495;
-//    private static final short EDGE_ORIENTATIONS_NUMBER = 2048;
-//    public static final short CORNER_ORIENTATIONS_NUMBER = 2187;
-//    public static final short UDSLICE_PERMUTATION_NUMBER = 24;
     public static final short URF_TO_DLF_C_AND_P_NUMBER = URF_TO_DLF_COMBINATION_NUMBER * URF_TO_DLF_PERMUTATION_NUMBER;
     public static final short UR_TO_DF_C_AND_P_NUMBER = UR_TO_DF_COMBINATION_NUMBER * UR_TO_DF_PERMUTATION_NUMBER;
     public static final byte PARITY = 2;

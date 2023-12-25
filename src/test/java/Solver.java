@@ -23,8 +23,10 @@ public class Solver {
 //                                        "R", "R2", "R'",
 //                                        "L", "L2", "L'"  };
 
-        coordinate.move(17);
-        coordinate.move(0);
+        byte[] currentMoves = new byte[]{17, 0, 5};
+        for(int move = 0; move < currentMoves.length; move++)
+            coordinate.move(currentMoves[move]);
+
 
         long start = System.currentTimeMillis();
 
@@ -58,7 +60,7 @@ public class Solver {
 
                 if (currentDepth >= depth) {
 
-                    if (isG2(stack[currentDepth])) {
+                    if (isG3(stack[currentDepth])) {
 
                         for(int i = 1; i <= currentDepth; i++)
                             System.out.println(translateToMove(moves[i]) + ", ");
@@ -147,14 +149,14 @@ public class Solver {
 
         }
 
-        if(moves[currentDepth] < 18) {
-            Coordinate c = new Coordinate(stack[currentDepth - 1]);
-            c.move(moves[currentDepth]);
-
-            if (currentDepth + getPhaseOneHeuristicValue(c) > BOUND) {
-                return false;
-            }
-        }
+//        if(moves[currentDepth] < 18) {
+//            Coordinate c = new Coordinate(stack[currentDepth - 1]);
+//            c.move(moves[currentDepth]);
+//
+//            if (currentDepth + getPhaseOneHeuristicValue(c) > BOUND) {
+//                return false;
+//            }
+//        }
 
 
 

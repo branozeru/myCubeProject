@@ -17,13 +17,13 @@ public class MoveTable {
     //each have 2 orientation form, 0 or 1, so it's 2 * 2 * 2.... which lead to 2^12
     //but by the laws of the Rubik's cube because the sum of the orientation always has to be even
     //the last orientation is determined by the rest, so this number should be divided by 2 => 2^12 / 2 = 2^11 = 2048
-    public static final short EDGE_ORIENTATIONS_NUMBER = 2048;
+    public static final short EDGE_ORIENTATIONS_NUMBER = 2048 ;
 
     //The number of possible corner orientation are 2187 because there are 8 corners and
     //each one have 3 orientation forms, 0/1/2, so it's 3 * 3 * 3.... which lead to 3^8
     //but by the laws of the Rubik's cube the last orientation is determined by the rest so this number
     //should be divided by 3 => 3^8 / 3 = 3^7 = 2187
-    public static final short CORNER_ORIENTATIONS_NUMBER = 2187;
+    public static final short CORNER_ORIENTATIONS_NUMBER = 2187 ;
 
     //The number of possible combination of the UD Slide edges ( the slice between the U slice to the D slice )
     //meaning how many option there are to take the 4 UD Slice edges from all the 12 edges.

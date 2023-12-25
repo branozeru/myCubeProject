@@ -68,14 +68,13 @@ public class Cubie {
         CORNER[] CornerPermutation = new CORNER[this.cornerPermutation.length];
         byte[] CornerOrientation = new byte[this.cornerOrientation.length];
 
-        final byte possibleCORNEROrientations = 3;
-
         for (int i = 0; i < CornerPermutation.length; i++) {
 
-            CornerPermutation[i] = this.cornerPermutation[other.cornerPermutation[i].ordinal()];
+            CornerPermutation[i] = this.cornerPermutation[other.getCornerPermutation()[i].ordinal()];
 
-            CornerOrientation[i] = (byte) (this.cornerOrientation[this.cornerPermutation[CornerPermutation[i].ordinal()].ordinal()] + other.cornerOrientation[i]);
-            CornerOrientation[i] %= possibleCORNEROrientations;
+            CornerOrientation[i] = this.cornerOrientation[other.getCornerPermutation()[i].ordinal()];
+            CornerOrientation[i] += other.getCornerOrientation()[i];
+            CornerOrientation[i] %= 3;
 
         }
 
@@ -87,14 +86,14 @@ public class Cubie {
         EDGE[] edgePermutation = new EDGE[this.edgePermutation.length];
         byte[] edgeOrientation = new byte[this.edgeOrientation.length];
 
-        final byte possibleEDGEOrientation = 2;
-
         for (int i = 0; i < edgePermutation.length; i++) {
 
-            edgePermutation[i] = this.edgePermutation[other.edgePermutation[i].ordinal()];
+            edgePermutation[i] = this.edgePermutation[other.getEdgePermutation()[i].ordinal()];
 
-            edgeOrientation[i] = (byte) (this.edgeOrientation[this.edgePermutation[edgePermutation[i].ordinal()].ordinal()] + other.edgeOrientation[i]);
-            edgeOrientation[i] %= possibleEDGEOrientation;
+            edgeOrientation[i] = this.edgeOrientation[other.getEdgePermutation()[i].ordinal()];
+            edgeOrientation[i] += other.getEdgeOrientation()[i];
+            edgeOrientation[i] %= 2;
+
 
         }
 
@@ -293,7 +292,7 @@ public class Cubie {
             edgeOrientationSum += this.edgeOrientation[i];
         }
 
-        //calc last orientation
+//        calc last orientation
         this.edgeOrientation[EDGE.values().length-1] = (byte) ((edgeOrientationSum % 2 == 0) ? 0 : 1);
 
     }
