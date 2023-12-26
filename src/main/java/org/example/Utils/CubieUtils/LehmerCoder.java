@@ -1,6 +1,6 @@
-package org.example.Utils;
+package org.example.Utils.CubieUtils;
 
-public class LehmerCodeConvertor {
+public class LehmerCoder {
 
     private static final int[] factorial = new int[]{
             1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800

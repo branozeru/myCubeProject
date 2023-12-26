@@ -9,12 +9,12 @@ public class PruningTable {
     public static final byte PARITY = 2;
 
 
-    //Phase one Pruning tables:
+    //PhaseNumber one Pruning tables:
     //"Eo" stands for edge orientation, and "Co" for corner orientation
     public static byte[] UDSliceAndEoPruningTable = new byte[UDSLICE_COMBINATION_NUMBER * EDGE_ORIENTATIONS_NUMBER / 2];
     public static byte[] UDSliceAndCoPruningTable = new byte[UDSLICE_COMBINATION_NUMBER * CORNER_ORIENTATIONS_NUMBER / 2 + 1];
 
-    //Phase two Pruning tables:
+    //PhaseNumber two Pruning tables:
     //"Cp" stands for corner permutation
     public static byte[] UDSlicePermutationAndCpTable = new byte[UDSLICE_PERMUTATION_NUMBER * URF_TO_DLF_C_AND_P_NUMBER * PARITY / 2];
     public static byte[] UDSlicePermutationAndEpTable = new byte[UDSLICE_PERMUTATION_NUMBER * UR_TO_DF_C_AND_P_NUMBER * PARITY / 2];

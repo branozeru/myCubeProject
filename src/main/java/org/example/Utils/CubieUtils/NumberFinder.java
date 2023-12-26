@@ -1,4 +1,4 @@
-package org.example.Utils;
+package org.example.Utils.CubieUtils;
 
 public interface NumberFinder {
 

@@ -1,7 +1,7 @@
-package org.example.Utils;
+package org.example.Utils.CubieUtils;
 
 
-public class Encoder extends LehmerCodeConvertor {
+public class Encoder extends LehmerCoder {
 
 
     public static int encodeCombination(int[] arr, NumberFinder numberFinder){
@@ -30,9 +30,6 @@ public class Encoder extends LehmerCodeConvertor {
         int[] resultArray = new int[n];
 
         int i;
-//        for(i = 0; i < resultArray.length; i++){
-//            resultArray[i] = 0;
-//        }
 
         int bin, a = k;
         for(i = n-1; i >= 0; i--){

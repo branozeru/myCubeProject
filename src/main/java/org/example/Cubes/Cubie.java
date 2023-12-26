@@ -4,9 +4,9 @@ import org.example.Enums.COLOR;
 import org.example.Enums.CORNER;
 import org.example.Enums.EDGE;
 import org.example.Enums.FACELET;
-import org.example.Utils.Encoder;
-import org.example.Utils.LehmerCodeConvertor;
-import org.example.Utils.NumberFinder;
+import org.example.Utils.CubieUtils.Encoder;
+import org.example.Utils.CubieUtils.LehmerCoder;
+import org.example.Utils.CubieUtils.NumberFinder;
 
 import java.util.Arrays;
 
@@ -161,7 +161,7 @@ public class Cubie {
 
         //THIS IS A MATHEMATICAL FUNCTION FOR ENCODING A PERMUTATION
         //GIVES A CODE FOR THIS RANDOM PERMUTATION OF THE UD SLICE EDGES
-        short permutation = (short) LehmerCodeConvertor.toLehmerCode(permutationArr);
+        short permutation = (short) LehmerCoder.toLehmerCode(permutationArr);
 
 
         //COMBINING THE COMBINATION CODE AND THE PERMUTATION CODE INTO A SINGLE CODE
@@ -214,9 +214,7 @@ public class Cubie {
         NumberFinder n = (a) -> (a >= UR.ordinal() && a <= DF.ordinal());
 
         EDGE[] shorterEdges = new EDGE[8];
-        for(int i = 0; i < shorterEdges.length; i++){
-            shorterEdges[i] = this.edgePermutation[i];
-        }
+        System.arraycopy(this.edgePermutation, 0, shorterEdges, 0, shorterEdges.length);
 
         int[] combinationArr = setCombinationArr(shorterEdges,n);
         int[] permutationArr = setPermutationArr(shorterEdges, n,6,0);
@@ -262,7 +260,6 @@ public class Cubie {
 
 
     }
-
     public void setCornerOrientationNumber(short code){
 
         int cornerOrientationSum = 0;
@@ -383,7 +380,6 @@ public class Cubie {
         }
 
     }
-
     public void setURtoDFNumber(short code){
 
         int combination = code / 720;
@@ -407,6 +403,36 @@ public class Cubie {
 
     }
 
+
+    //ADDED CODE
+    public void setURtoDFNumber(short URtoUL, short UBtoDF){
+
+        Cubie a = new Cubie();
+        Cubie b = new Cubie();
+
+        a.setURtoULNumber(URtoUL);
+        b.setUBtoDFNumber(UBtoDF);
+
+        Cubie c = new Cubie();
+        EDGE[] merged = c.getEdgePermutation();
+
+        EDGE currentA,currentB;
+
+
+        for(int i = 0; i < EDGE.values().length; i++){
+
+            currentA = a.getEdgePermutation()[i];
+            currentB = b.getEdgePermutation()[i];
+            if (currentA.ordinal() > UL.ordinal()) {
+                merged[i] = currentB;
+            }
+            else{
+                merged[i] = currentA;
+            }
+
+        }
+
+    }
     private <T extends Enum<T>> int[] setCombinationArr(T[] arr, NumberFinder n){
 
         int[] result = new int[arr.length];
@@ -428,10 +454,10 @@ public class Cubie {
         int[] result = new int[length];
 
         int j = 0;
-        for(int i = 0; i < arr.length; i++){
+        for (T t : arr) {
 
-            if(n.isInNumbers(arr[i].ordinal())){
-                result[j++] = arr[i].ordinal() - offset;
+            if (n.isInNumbers(t.ordinal())) {
+                result[j++] = t.ordinal() - offset;
             }
 
         }
