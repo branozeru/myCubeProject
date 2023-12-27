@@ -21,11 +21,5 @@ public class TestMain {
 
     }
 
-    public static boolean isSolved(Coordinate coordinate){
-
-        Coordinate solvedCube = new Coordinate(new Cubie());
-        return coordinate.equals(solvedCube);
-
-    }
 
 }

@@ -207,8 +207,6 @@ public class PruningTable {
 
                             insertToTable(UDSlicePermutationAndEpTable, index, (byte) (depth+1));
                             counter++;
-//                            System.out.println("Depth: " + depth + ", Counter: " + counter);
-
 
                         }
 

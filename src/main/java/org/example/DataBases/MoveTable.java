@@ -114,7 +114,6 @@ public class MoveTable {
     };
 
     //MOVE TABLES
-
     static {
 
         Cubie cubie = new Cubie();
