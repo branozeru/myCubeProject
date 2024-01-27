@@ -46,7 +46,7 @@ public class Coordinate {
         this.cornerPermutation = MoveTable.URFtoDLFMoveTable[this.cornerPermutation][move];
         this.URtoUL = MoveTable.URtoULMoveTable[this.URtoUL][move];
         this.UBtoDF = MoveTable.UBtoDFMoveTable[this.UBtoDF][move];
-        this.parity = MoveTable.parityMoveTable[this.parity][move];
+        this.parity = MoveTable.ParityMoveTable[this.parity][move];
 
 
     }

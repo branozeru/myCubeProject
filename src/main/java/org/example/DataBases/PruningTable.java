@@ -137,7 +137,7 @@ public class PruningTable {
 
                     for(int move : G2Moves){
 
-                        int NewParity = MoveTable.parityMoveTable[parity][move];
+                        int NewParity = MoveTable.ParityMoveTable[parity][move];
                         int NewUDSlicePermutation = MoveTable.UDSliceMoveTable[(UDSLICE_COMBINATION_NUMBER-1)*(UDSLICE_PERMUTATION_NUMBER) + UDSlicePermutation][move] % UDSLICE_PERMUTATION_NUMBER;
                         int NewURFtoDLF = MoveTable.URFtoDLFMoveTable[URFtoDLF][move];
 
@@ -198,7 +198,7 @@ public class PruningTable {
 
                     for(int move = 0; move < G2Moves.length; move++){
 
-                        int NewParity = MoveTable.parityMoveTable[parity][G2Moves[move]];
+                        int NewParity = MoveTable.ParityMoveTable[parity][G2Moves[move]];
                         int NewUDSlicePermutation = MoveTable.UDSliceMoveTable[(UDSLICE_COMBINATION_NUMBER-1)*(UDSLICE_PERMUTATION_NUMBER) + UDSlicePermutation][G2Moves[move]] % 24;
                         int NewURtoDF = MoveTable.URtoDFMoveTable[URtoDF][move];
                         int index = NewURtoDF * UDSLICE_PERMUTATION_NUMBER * PARITY + NewUDSlicePermutation * PARITY + NewParity;

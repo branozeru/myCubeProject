@@ -5,11 +5,8 @@ import org.example.Cubes.Cubie;
 import org.example.DataBases.MoveTable;
 import org.example.DataBases.PruningTable;
 import org.example.Enums.PhaseNumber;
-import org.example.Utils.AlgorithmUtils.CubeChecker;
-import org.example.Utils.AlgorithmUtils.heuristicValuer;
 
-import static org.example.DataBases.MoveTable.UDSLICE_COMBINATION_NUMBER;
-import static org.example.DataBases.MoveTable.UDSLICE_PERMUTATION_NUMBER;
+import static org.example.DataBases.MoveTable.*;
 import static org.example.DataBases.PruningTable.PARITY;
 
 public class Phase {
@@ -80,11 +77,14 @@ public class Phase {
                 short URtoUL = coordinate.getURtoUL();
                 short UBtoDF = coordinate.getUBtoDF();
 
-                Cubie cubie = new Cubie();
-                cubie.setURtoDFNumber(URtoUL, UBtoDF);
-                int URtoDF = cubie.getURtoDF();
+//                Cubie cubie = new Cubie();
+//                cubie.setURtoDFNumber(URtoUL, UBtoDF);
+//                int URtoDF = cubie.getURtoDF();
 
-//                int URtoDF = MoveTable.UniteURtoDF[URtoUL][UBtoDF];
+                short newURtoUL = TranslateURtoUL[URtoUL];
+                short newUBtoDF = TranslateUBtoDF[UBtoDF];
+                short URtoDF = UniteURtoDF[newURtoUL][newUBtoDF];
+
                 index2 = URtoDF * UDSLICE_PERMUTATION_NUMBER * PARITY + UDSlicePermutation * PARITY + parity;
                 value2 = PruningTable.getFromTable(PruningTable.UDSlicePermutationAndEpTable,index2);
 
@@ -103,7 +103,7 @@ public class Phase {
         return phaseNumber;
     }
 
-    public org.example.Utils.AlgorithmUtils.heuristicValuer getHeuristicValuer() {
+    public heuristicValuer getHeuristicValuer() {
         return heuristicValuer;
     }
 }

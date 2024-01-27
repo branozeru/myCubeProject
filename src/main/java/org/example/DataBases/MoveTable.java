@@ -3,6 +3,9 @@ package org.example.DataBases;
 import org.example.Cubes.Cubie;
 import org.example.Enums.CORNER;
 import org.example.Enums.EDGE;
+import org.example.Utils.CubieUtils.NumberFinder;
+
+import java.util.Arrays;
 
 import static org.example.Enums.CORNER.*;
 import static org.example.Enums.EDGE.*;
@@ -67,14 +70,15 @@ public class MoveTable {
     //Taking 3 elements out of 8 = 3P8 = 336
     public static short[][] UniteURtoDF = new short[336][336];
 
+    public static short[] TranslateURtoUL = new short[UR_TO_UL_COMBINATION_NUMBER * UR_TO_UL_PERMUTATION_NUMBER];
+    public static short[] TranslateUBtoDF = new short[UB_TO_DF_COMBINATION_NUMBER * UB_TO_DF_PERMUTATION_NUMBER];
+
     //Every turn of any side change the parity from 0 to 1 or vice versa
     //So if the parity is 0 any move will turn to a 1 unless it is a twice-turn move like U2
     //and if the parity is 1 any move will turn to a 0 unless it is a twice-turn
     // moves order: U, U2, U', D, D2, D', F, F2, F', B, B2, B', R, R2, R', L, L2, L'
-
-    public static byte[][] parityMoveTable = {  { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
+    public static byte[][] ParityMoveTable = {  { 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1 },
                                                 { 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0 } };
-
 
 
 
@@ -271,7 +275,7 @@ public class MoveTable {
         Cubie cubie = new Cubie();
         for(int URtoUL = 0; URtoUL < 336; URtoUL++){
             for(int UBtoDF = 0; UBtoDF < 336; UBtoDF++){
-
+                //8P3 => 8P6
                 UniteURtoDF[URtoUL][UBtoDF] = cubie.getURtoDF((short) URtoUL, (short) UBtoDF);
 
             }
@@ -281,7 +285,35 @@ public class MoveTable {
     }
 
     static {
-        //
+
+        Cubie cubie = new Cubie();
+        NumberFinder n = (a) -> (a >= UR.ordinal() && a <= UL.ordinal());
+        for(short i = 0; i < UR_TO_UL_COMBINATION_NUMBER * UR_TO_UL_PERMUTATION_NUMBER; i++){
+
+            cubie.setURtoULNumber(i);
+            TranslateURtoUL[i] = cubie.getThreePartsCode(n, (byte) UR.ordinal());
+
+        }
+//        System.out.println("FLAG!");
+
+    }
+
+    static {
+
+        Cubie cubie = new Cubie();
+        NumberFinder n = (a) -> (a >= UB.ordinal() && a <= DF.ordinal());
+        for(short i = 0; i < UB_TO_DF_COMBINATION_NUMBER * UB_TO_DF_PERMUTATION_NUMBER; i++){
+
+            cubie.setUBtoDFNumber(i);
+            TranslateUBtoDF[i] = cubie.getThreePartsCode(n, (byte) UB.ordinal());
+
+        }
+//        System.out.println("FLAG!");
+
+    }
+
+    static {
+
         //U, U2, U', D, D2, D', F2, B2, R2, L2
 
         Cubie cubie = new Cubie();
@@ -321,6 +353,5 @@ public class MoveTable {
 
 
     }
-
 
 }

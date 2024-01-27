@@ -231,8 +231,29 @@ public class Cubie {
         Cubie a = new Cubie();
         Cubie b = new Cubie();
 
-        a.setURtoULNumber(URtoUL);
-        b.setUBtoDFNumber(UBtoDF);
+
+//        a.setURtoULNumber(URtoUL);
+//        b.setUBtoDFNumber(UBtoDF);
+
+        Arrays.fill(a.getEdgePermutation(),BR);
+        Arrays.fill(b.getEdgePermutation(),BR);
+        int[] URtoULComb = Encoder.decodeCombination(URtoUL/6, 8, 3);
+        int[] UBtoDFComb = Encoder.decodeCombination(UBtoDF/6, 8, 3);
+        int[] URtoULPer = Encoder.fromLehmerCode(URtoUL%6, 3);
+        int[] UBtoDFPer = Encoder.fromLehmerCode(UBtoDF%6, 3);
+
+        int k = 0, t = 0;
+        for(int i = 0; i < 8; i++){
+
+            if(URtoULComb[i] == 1){
+                a.getEdgePermutation()[i] = EDGE.values()[URtoULPer[k++]];
+            }
+
+            if(UBtoDFComb[i] == 1){
+                b.getEdgePermutation()[i] = EDGE.values()[UBtoDFPer[t++] + UB.ordinal()];
+            }
+
+        }
 
         Cubie c = new Cubie();
         EDGE[] merged = c.getEdgePermutation();
@@ -247,7 +268,13 @@ public class Cubie {
             if(currentA.ordinal() <= UL.ordinal() &&
                currentB.ordinal() >= UB.ordinal() && currentB.ordinal() <= DF.ordinal()) {
                     return -1;
-            } else if (currentA.ordinal() > UL.ordinal()) {
+            }/* else if (currentA.ordinal() > UL.ordinal()) {
+                merged[i] = currentB;
+            }
+            else{
+                merged[i] = currentA;
+            }*/
+            else if(currentA == BR){
                 merged[i] = currentB;
             }
             else{
@@ -255,6 +282,7 @@ public class Cubie {
             }
 
         }
+        c.setEdges(merged,new byte[]{0,0,0,0,0,0,0,0,0,0,0,0});
 
         return c.getURtoDF();
 
@@ -399,6 +427,33 @@ public class Cubie {
             }
 
         }
+
+
+    }
+
+    public short getThreePartsCode(NumberFinder n, byte offset){
+
+        int counter = 0;
+        for(int i = UR.ordinal(); i <= DB.ordinal(); i++){
+
+            if(n.isInNumbers(edgePermutation[i].ordinal())){
+                counter++;
+            }
+
+        }
+        if(counter != 3)
+            return -1;
+
+        EDGE[] shorterArr = new EDGE[8];
+        System.arraycopy(this.edgePermutation, 0, shorterArr, 0, shorterArr.length);
+
+        int[] combinationArr = setCombinationArr(shorterArr,n);
+        int[] permutationArr = setPermutationArr(shorterArr,n,3,offset);
+
+        short combination = (short) Encoder.encodeCombination(combinationArr,n);
+        short permutation = (short) Encoder.toLehmerCode(permutationArr);
+
+        return (short) (combination * 6 + permutation);
 
 
     }

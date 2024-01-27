@@ -1,50 +1,26 @@
 package org.example.Algorithms;
 
 import org.example.Cubes.Coordinate;
-import org.example.Cubes.Cubie;
 import org.example.Enums.COLOR;
 import org.example.Utils.AlgorithmUtils.Phase;
 
 import java.util.Arrays;
 
-import static org.example.Enums.PhaseNumber.*;
+import static org.example.Enums.PhaseNumber.FirstPhase;
+import static org.example.Enums.PhaseNumber.SecondPhase;
 
 public class Kociemba {
 
     private static final byte[] moves = new byte[31];
     private static final byte[] solution = new byte[31];
     private static final Coordinate[] stack = new Coordinate[31];
+
+
     private static byte BOUND;
 
     private static final Phase PhaseOne = new Phase(FirstPhase);
     private static final Phase PhaseTwo = new Phase(SecondPhase);
 
-
-    public static void main(String[] args){
-
-        Coordinate coordinate = new Coordinate(new Cubie());
-        coordinate.move(0); // --> 2
-        coordinate.move(6); // --> 8
-        coordinate.move(3); // -> 5
-        coordinate.move(9); // -> 5
-        coordinate.move(7); // -> 5
-        coordinate.move(5); // -> 5
-        coordinate.move(1); // -> 5
-        coordinate.move(3); // -> 5
-
-
-        long start = System.currentTimeMillis();
-
-        //Add your code here
-        Search(coordinate);
-
-        long end = System.currentTimeMillis();
-        long duration = end - start;
-
-        System.out.println("Runtime: " + duration*0.001+"s");
-
-
-    }
 
     public static void Search(Coordinate coordinate){
 
@@ -53,9 +29,20 @@ public class Kociemba {
         BOUND = 30;
 
         stack[0] = coordinate;
+        long start = System.currentTimeMillis();
+
+        //Add your code here
         int solutionLength = IDAStar((byte) 0, PhaseOne);
+
+        long end = System.currentTimeMillis();
+        long duration = end - start;
+
+        System.out.println("Solution length: " + BOUND);
         for(int i = 1; i <= BOUND; i++)
             System.out.println(translateToMove(solution[i]));
+
+
+        System.out.println("\n\nRuntime: " + duration*0.001+"s");
 
     }
 
@@ -63,16 +50,16 @@ public class Kociemba {
 
         byte depth = 0;
         byte solutionLength;
-        int counter = 0;
         while((solutionLength = AStar(startDepth, (byte) (startDepth + depth), phase)) == -1 || phase.getPhaseNumber() == FirstPhase){
             depth++;
-            if(solutionLength != -1) {
-//                System.out.println("here");
-//                if(++counter == 2){
-//                    System.out.println("2");
-//                }
-                Arrays.fill(moves,(byte) -1);
+
+            if(phase.getPhaseNumber() == SecondPhase){
+
+                for(int i = startDepth+1; i < moves.length; i++)
+                    moves[i] = -1;
+
             }
+
             if(startDepth + depth >= BOUND)
                 break;
         }
@@ -81,13 +68,13 @@ public class Kociemba {
 
     }
 
-    private static byte AStar(byte startDepth, byte depth, Phase phase){
+    private static byte AStar(byte startDepth, byte EndDepth, Phase phase){
 
         byte currentDepth = startDepth;
 
         while(currentDepth >= startDepth){
 
-            if(currentDepth == depth){
+            if(currentDepth == EndDepth){
 
                 if(phase.getCubeChecker().isInGroup(stack[currentDepth])){
 
@@ -101,22 +88,24 @@ public class Kociemba {
                     byte phaseTwoLength = IDAStar(currentDepth, PhaseTwo);
                     if(phaseTwoLength != -1) {
                         BOUND = (byte) (currentDepth + phaseTwoLength);
-//                        return BOUND;
-                    }
-//                    return -1;
+                        for(int i = currentDepth+1; i < moves.length; i++)
+                            moves[i] = -1;
 
+                    }
                 }
 
                 if(moves[currentDepth] == 17){
-                    stack[currentDepth] = null;
-                    moves[currentDepth] = -1;
-                    currentDepth -= 1;
+                    if(phase.getPhaseNumber() != SecondPhase && EndDepth > 0) {
+                        stack[currentDepth] = null;
+                        moves[currentDepth] = -1;
+                        currentDepth -= 1;
+                    }
                 }
 
                 currentDepth -= 1;
 
             }
-            else if(currentDepth < depth){
+            else if(currentDepth < EndDepth){
 
                 currentDepth++;
                 do {
@@ -125,9 +114,6 @@ public class Kociemba {
 
                 }while(!isMoveValid(currentDepth,moves[currentDepth], phase));
 
-                //TEST
-//                if(moves[1] == 5)
-//                    System.out.println("STOP HERE");
 
                 if(moves[currentDepth] >= 18) {
                     moves[currentDepth] = -1;
@@ -158,8 +144,6 @@ public class Kociemba {
          * */
 
         //move is not valid, but it reached too far, so I need to terminate it.
-
-
         if(move >= 18) {
             return true;
         }

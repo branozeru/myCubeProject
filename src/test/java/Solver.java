@@ -24,15 +24,14 @@ public class Solver {
 //                                        "L", "L2", "L'"  };
 
         byte[] currentMoves = new byte[]{17, 0, 5};
-        for(int move = 0; move < currentMoves.length; move++)
-            coordinate.move(currentMoves[move]);
+        for (byte currentMove : currentMoves) coordinate.move(currentMove);
 
 
         long start = System.currentTimeMillis();
 
         //Add your code here
         Search(coordinate);
-
+  
         long end = System.currentTimeMillis();
         long duration = end - start;
 
